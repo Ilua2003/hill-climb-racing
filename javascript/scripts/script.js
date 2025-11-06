@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
             pressed: false,
         },
     };
-    car.src = "../images/car2.jpg"; // ИСПРАВЛЕН ПУТЬ
+    car.src = "images/car2.jpg";
     let cX = 280;
     let cY = -100;
     let carMove = (dY) => {
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function coin(d) {
         s = d;
         let coin = new Image();
-        coin.src = "../images/coin.png"; // ИСПРАВЛЕН ПУТЬ
+        coin.src = "images/coin.png";
         c.drawImage(coin, coinDistance, d - 120, 70, 50);
         coinDistance = coinDistance - h1;
         if (coinDistance <= 380) {
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function coin1(d) {
         let coin = new Image();
-        coin.src = "../images/coin.png"; // ИСПРАВЛЕН ПУТЬ
+        coin.src = "images/coin.png";
         c.drawImage(coin, coinDistance1, d - 120, 70, 50);
         coinDistance1 = coinDistance1 - h1;
         if (coinDistance1 <= 380) {
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function coin2(d) {
         let petrol9 = new Image();
-        petrol9.src = "../images/petrolTanker.png"; // ИСПРАВЛЕН ПУТЬ
+        petrol9.src = "images/petrolTanker.png";
         c.drawImage(petrol9, coinDistance2, d - 120, 70, 50);
         coinDistance2 = coinDistance2 - h1;
         if (coinDistance2 <= 380) {
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function animate() {
         c.fillRect(0, 0, canvas.width, canvas.height);
         dCaclulate();
-        img.src = "../images/trackNew.jpeg"; // ИСПРАВЛЕН ПУТЬ
+        img.src = "images/trackNew.jpeg";
         position += 1;
         let i;
 
