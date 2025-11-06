@@ -31,7 +31,7 @@
 
       let loadBar = setInterval(animate, 300);
       function newPage() {
-        window.open("html/game.html");
+        window.location.href = "html/game.html";
       }
       function animate() {
         if (start >= 670) clearInterval(loadBar, 500);
