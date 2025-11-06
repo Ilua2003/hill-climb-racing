@@ -12,7 +12,7 @@ Welcome to the Hill Climb Racing game! This project is a fun and challenging gam
 
 ## Deployment
 
-Play the game [here](https://dapper-caramel-f8a259.netlify.app).
+Play the game [here]([https://dapper-caramel-f8a259.netlify.app](https://ilua2003.github.io/hill-climb-racing/)).
 
 ## Technologies Used
 
