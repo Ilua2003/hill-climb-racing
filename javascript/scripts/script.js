@@ -1,4 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Функция для загрузки изображений с обработкой ошибок
+    function loadImage(url) {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = () => reject(new Error(`Failed to load image: ${url}`));
+            img.src = url;
+        });
+    }
+
     let canvas = document.getElementById("canvas");
     if (!canvas) {
         console.error("Canvas element not found!");
@@ -30,6 +40,39 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let carDistance = 0;
     let img = new Image();
+    let car = new Image();
+    let gameImages = {};
+
+    // Загрузка всех изображений
+    async function loadAllImages() {
+        try {
+            const basePath = window.location.origin + '/hill-climb-racing/images/';
+            
+            gameImages.car = await loadImage(basePath + 'car2.jpg');
+            gameImages.coin = await loadImage(basePath + 'coin.png');
+            gameImages.petrol = await loadImage(basePath + 'petrolTanker.png');
+            gameImages.track = await loadImage(basePath + 'trackNew.jpeg');
+            
+            console.log('All images loaded successfully');
+            return true;
+        } catch (error) {
+            console.error('Error loading images:', error);
+            
+            // Попробуем альтернативные пути
+            try {
+                const altPath = 'https://ilua2003.github.io/hill-climb-racing/images/';
+                gameImages.car = await loadImage(altPath + 'car2.jpg');
+                gameImages.coin = await loadImage(altPath + 'coin.png');
+                gameImages.petrol = await loadImage(altPath + 'petrolTanker.png');
+                gameImages.track = await loadImage(altPath + 'trackNew.jpeg');
+                console.log('Images loaded from alternative path');
+                return true;
+            } catch (altError) {
+                console.error('All image loading attempts failed');
+                return false;
+            }
+        }
+    }
 
     function dCaclulate() {
         if (distance) distance.innerHTML = carDistance;
@@ -43,7 +86,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 300);
     }
 
-    let car = new Image();
     let carKeys = {
         right: {
             pressed: false,
@@ -52,12 +94,15 @@ document.addEventListener('DOMContentLoaded', function() {
             pressed: false,
         },
     };
-    car.src = "https://raw.githubusercontent.com/Ilua2003/hill-climb-racing/main/images/car2.jpg";
+    
     let cX = 280;
     let cY = -100;
     let carMove = (dY) => {
-        c.drawImage(car, cX, dY, 130, 150);
+        if (gameImages.car) {
+            c.drawImage(gameImages.car, cX, dY, 130, 150);
+        }
     };
+    
     let d = document.getElementById("distance");
 
     function dCaclulate() {
@@ -72,10 +117,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let coinDistance = canvas.width;
 
     function coin(d) {
+        if (!gameImages.coin) return;
+        
         s = d;
-        let coin = new Image();
-        coin.src = "https://raw.githubusercontent.com/Ilua2003/hill-climb-racing/main/images/coin.png";
-        c.drawImage(coin, coinDistance, d - 120, 70, 50);
+        c.drawImage(gameImages.coin, coinDistance, d - 120, 70, 50);
         coinDistance = coinDistance - h1;
         if (coinDistance <= 380) {
             coinDistance = canvas.width;
@@ -86,9 +131,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let coinDistance1 = canvas.width / 2;
 
     function coin1(d) {
-        let coin = new Image();
-        coin.src = "https://raw.githubusercontent.com/Ilua2003/hill-climb-racing/main/images/coin.png";
-        c.drawImage(coin, coinDistance1, d - 120, 70, 50);
+        if (!gameImages.coin) return;
+        
+        c.drawImage(gameImages.coin, coinDistance1, d - 120, 70, 50);
         coinDistance1 = coinDistance1 - h1;
         if (coinDistance1 <= 380) {
             coinDistance1 = canvas.width;
@@ -99,14 +144,16 @@ document.addEventListener('DOMContentLoaded', function() {
     let coinDistance2 = canvas.width / 4;
 
     function coin2(d) {
-        let petrol9 = new Image();
-        petrol9.src = "https://raw.githubusercontent.com/Ilua2003/hill-climb-racing/main/images/petrolTanker.png";
-        c.drawImage(petrol9, coinDistance2, d - 120, 70, 50);
+        if (!gameImages.petrol) return;
+        
+        c.drawImage(gameImages.petrol, coinDistance2, d - 120, 70, 50);
         coinDistance2 = coinDistance2 - h1;
         if (coinDistance2 <= 380) {
             coinDistance2 = canvas.width;
-            pLine.style.backgroundColor = "rgb(21, 139, 41)";
-            start = 250;
+            if (pLine) {
+                pLine.style.backgroundColor = "rgb(21, 139, 41)";
+                start = 250;
+            }
         }
     }
 
@@ -115,17 +162,20 @@ document.addEventListener('DOMContentLoaded', function() {
     let o = canvas.width / 4 + 20;
 
     function animate() {
+        if (!gameImages.track) return;
+        
         c.fillRect(0, 0, canvas.width, canvas.height);
         dCaclulate();
-        img.src = "https://raw.githubusercontent.com/Ilua2003/hill-climb-racing/main/images/trackNew.jpeg";
+        
         position += 1;
         let i;
 
         for (i = 0; i < canvas.width; i++) {
             g = canvas.height - land(i + position);
             A.push(g);
-            c.drawImage(img, i, g - 40);
+            c.drawImage(gameImages.track, i, g - 40);
         }
+        
         if (carKeys.right.pressed) {
             position += 5;
             o += 5;
@@ -135,11 +185,13 @@ document.addEventListener('DOMContentLoaded', function() {
             o -= 5;
             carDistance--;
         }
+        
         carMove(A[o] - 180);
         coin(A[canvas.width - 1]);
         coin1(A[canvas.width / 2 - 1]);
         coin2(A[canvas.width / 4 - 1]);
         o++;
+        
         if (scoreNew) scoreNew.innerHTML = score;
         requestAnimationFrame(animate);
     }
@@ -171,6 +223,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let PBar = setInterval(petrolWork, 500);
 
     function petrolWork() {
+        if (!pLine) return;
+        
         if (start < 150 && start > 80) {
             pLine.style.backgroundColor = "#FFFF00";
             pLine.style.transition = "0.1s linear";
@@ -183,10 +237,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (start < -2) {
             window.location.assign("out.html");
         }
-        if (pLine) pLine.style.width = start + "px";
+        pLine.style.width = start + "px";
     }
-
-    petrolWork();
 
     let section = document.getElementById("section1");
     let load = document.getElementById("click-me");
@@ -198,14 +250,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     let bar = document.getElementById("line");
+    
     if (load) {
-        load.addEventListener("click", () => {
+        load.addEventListener("click", async () => {
+            // Ждем загрузки изображений перед запуском игры
+            const imagesLoaded = await loadAllImages();
+            
+            if (!imagesLoaded) {
+                alert('Ошибка загрузки изображений. Проверьте консоль для подробностей.');
+                return;
+            }
+
             const cDown = setInterval(carDown, 50);
             function carDown() {
                 cY += 50;
                 if (cY > canvas.height - 160 - img.height) clearInterval(cDown);
                 setTimeout(startShow(), 2000);
             }
+            
             if (section) section.style.visibility = "hidden";
             if (petrol) petrol.style.visibility = "visible";
             if (pLine) pLine.style.visibility = "visible";
@@ -215,8 +277,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (fuel1) fuel1.style.visibility = "visible";
             if (fuelImage) fuelImage.style.visibility = "visible";
             if (coinImage) coinImage.style.visibility = "visible";
+            
             dPosition();
             animate();
         });
+    } else {
+        console.error('Start button not found');
     }
 });
