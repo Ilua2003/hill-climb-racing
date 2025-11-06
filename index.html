@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="icon" href="/images/car2.jpg" />
+    <link rel="stylesheet" href="css/style.css" />  <!-- Убрал / -->
+    <link rel="icon" href="images/car2.jpg" />  <!-- Убрал / -->
     <style>
       body {
-        background: url(/images/bg1.jpg) no-repeat center fixed;
+        background: url(images/bg1.jpg) no-repeat center fixed;  <!-- Убрал / -->
         background-size: cover;
         opacity: 0.9;
       }
@@ -17,7 +17,7 @@
   </head>
   <body>
     <section id="firstPage">
-      <img id="title" src="/images/name (2).png" />
+      <img id="title" src="images/name (2).png" />  <!-- Убрал / -->
       <h1 id="load">Loading...</h1>
       <div id="loadingBg">
         <div id="loading"></div>
@@ -31,7 +31,7 @@
 
       let loadBar = setInterval(animate, 300);
       function newPage() {
-        window.open("/html/game.html");
+        window.open("html/game.html");  <!-- Убрал / -->
       }
       function animate() {
         if (start >= 670) clearInterval(loadBar, 500);
