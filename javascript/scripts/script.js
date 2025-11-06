@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
             pressed: false,
         },
     };
-    car.src = "https://ilua2003.github.io/hill-climb-racing/images/car2.jpg";
+    car.src = "https://raw.githubusercontent.com/Ilua2003/hill-climb-racing/main/images/car2.jpg";
     let cX = 280;
     let cY = -100;
     let carMove = (dY) => {
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function coin(d) {
         s = d;
         let coin = new Image();
-        coin.src = "https://ilua2003.github.io/hill-climb-racing/images/coin.png";
+        coin.src = "https://raw.githubusercontent.com/Ilua2003/hill-climb-racing/main/images/coin.png";
         c.drawImage(coin, coinDistance, d - 120, 70, 50);
         coinDistance = coinDistance - h1;
         if (coinDistance <= 380) {
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function coin1(d) {
         let coin = new Image();
-        coin.src = "https://ilua2003.github.io/hill-climb-racing/images/coin.png";
+        coin.src = "https://raw.githubusercontent.com/Ilua2003/hill-climb-racing/main/images/coin.png";
         c.drawImage(coin, coinDistance1, d - 120, 70, 50);
         coinDistance1 = coinDistance1 - h1;
         if (coinDistance1 <= 380) {
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function coin2(d) {
         let petrol9 = new Image();
-        petrol9.src = "https://ilua2003.github.io/hill-climb-racing/images/petrolTanker.png";
+        petrol9.src = "https://raw.githubusercontent.com/Ilua2003/hill-climb-racing/main/images/petrolTanker.png";
         c.drawImage(petrol9, coinDistance2, d - 120, 70, 50);
         coinDistance2 = coinDistance2 - h1;
         if (coinDistance2 <= 380) {
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function animate() {
         c.fillRect(0, 0, canvas.width, canvas.height);
         dCaclulate();
-        img.src = "https://ilua2003.github.io/hill-climb-racing/images/trackNew.jpeg";
+        img.src = "https://raw.githubusercontent.com/Ilua2003/hill-climb-racing/main/images/trackNew.jpeg";
         position += 1;
         let i;
 
